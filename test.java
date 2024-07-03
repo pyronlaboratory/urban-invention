@@ -1,20 +1,20 @@
 package com.thealgorithms.backtracking;
 import java.util.*;
 /**
- * Is a program that solves Sudoku puzzles by iterating over a 2D grid and filling
- * in the missing values based on a set of rules. The class has several methods for
- * solving Sudoku puzzles, including `solve`, `neighbors`, `countNeighbors`, and
- * `orphanDetected`. These methods use a recursive approach to solve the puzzle by
- * exploring the neighboring cells and determining if they can be filled with a
- * specific number. The program also has a `printResult` method that prints out the
- * solved puzzle.
+ * Is used to solve Sudoku puzzles by exploring neighboring cells and recursively
+ * solving the puzzle until a solution is found or none exists. The class uses a 2D
+ * grid represented as an array of integers, with each cell value representing whether
+ * it contains a mine or not. The solve method starts at a random location and
+ * recursively solves the puzzle by exploring neighboring cells until a solution is
+ * found or none exists.
  */
 public class KnightsTour {
 /**
- * Calculates the number of elements in a linked list by iterating through the list
- * and counting the number of non-null items.
+ * Iterates over the elements of a linked list and returns the number of elements up
+ * to the maximum allowed value.
  * 
- * @returns the number of nodes in the linked list.
+ * @returns the number of nodes in the linked list, calculated by iterating over the
+ * list and counting the number of non-null items.
  */
 public int size() {
     restartFromHead: for (;;) {
@@ -45,19 +45,15 @@ public int size() {
     private static int total; // total squares in chess
 
     /**
-     * Generates a grid of size base x base and initializes it with -1 values, except for
-     * a random row and column where a 1 is placed. It then uses a recursive function
-     * `solve` to check if there exists a path from the random row and column to the
-     * top-left corner of the grid, and prints "result" if such a path exists or "no
-     * result" otherwise.
+     * Creates a grid with random values, checks if a specific cell can be filled based
+     * on its row and column, and prints the result.
      * 
-     * @param args 0 or more command-line arguments passed to the program, which are
-     * ignored in this case and have no effect on the function's behavior.
+     * @param args 0 or more command-line arguments passed to the Java program, which are
+     * ignored in this case since no action is taken on them.
      * 
-     * * Length: `args.length` is equal to 0 or 1, indicating whether any arguments were
-     * passed to the program.
-     * * Elements: If `args.length > 0`, then `args[0]` is the only argument, which is a
-     * string representing the command-line option or value.
+     * * Length: `args.length` is equal to 0 or 1.
+     * * Elements: `args[0]` is the single argument passed to the function, which is
+     * typically the base value for the grid.
      */
     public static void main(String[] args) {
         grid = new int[base][base];
@@ -85,22 +81,23 @@ public int size() {
 
 
     /**
-     * 1) checks if the count is greater than the total number of stones, 2) checks if
-     * there are no neighbors, 3) sorts the neighbors by position, and 4) iterates through
-     * the neighbors to solve the Sudoku puzzle by updating the grid values and checking
-     * for orphan detection.
+     * Determines if a given cell can be filled with a number, based on the values of its
+     * neighbors and the current count. It iterates through neighboring cells, checking
+     * if they can be filled and updating the grid accordingly, until a solution is found
+     * or none remains.
      * 
-     * @param row 2D coordinate of the cell in the grid that is being checked for orphaned
-     * tiles.
+     * @param row 2D coordinates of a cell in the grid that is being analyzed for orphan
+     * detection.
      * 
-     * @param column 2D position of the cell to be checked for orphans in the grid, and
-     * is used to determine the corresponding cell value in the `grid` array.
+     * @param column 2nd dimension of the grid, which is used to determine the neighbors
+     * of a cell and to keep track of the current position in the grid during the algorithm's
+     * execution.
      * 
-     * @param count 2D position in the grid where the algorithm should search for an
-     * orphan cell, and it is used to determine the number of neighbors to consider for
-     * the sort and check for orphan detection.
+     * @param count 1-based position of the current cell in the grid, which is used to
+     * determine whether the cell has been visited before and to track the progress of
+     * the algorithm.
      * 
-     * @returns a boolean value indicating whether the Sudoku puzzle has been solved.
+     * @returns a boolean value indicating whether the Sudoku puzzle is solved or not.
      */
     private static boolean solve(int row, int column, int count) {
         if (count > total) {
@@ -130,14 +127,20 @@ public int size() {
 
     /**
      * Computes and returns a list of neighboring cells for a given cell in a grid, based
-     * on the movement rules provided in the function's parameters.
+     * on a set of predefined moves and a count of the number of neighbors at each location.
      * 
-     * @param row 2D coordinate of the cell for which the neighbors are being calculated.
+     * @param row 2D coordinate of the cell for which the neighbors are being computed.
      * 
-     * @param column 2nd dimension of the grid in the neighborhood search, used to determine
-     * the surrounding cells for each cell in the grid.
+     * @param column 2nd dimension of the grid, which is used to determine the coordinates
+     * of the neighbors to count and return.
      * 
-     * @returns a list of neighboring cells and their corresponding number of neighbors.
+     * @returns a list of integer arrays containing information about the number of
+     * neighbors for each cell in the grid.
+     * 
+     * 1/ The list of neighbors is stored in an instance of `List<int[]>`.
+     * 2/ Each element of the list is represented by a 3-element array, where the first
+     * two elements represent the coordinates of the neighboring cell, and the third
+     * element represents the number of neighbors for that cell.
      */
     private static List<int[]> neighbors(int row, int column) {
         List<int[]> neighbour = new ArrayList<>();
@@ -155,11 +158,12 @@ public int size() {
 
 
     /**
-     * Counts the number of neighbors of a cell in a grid that are empty.
+     * Counts the number of neighbors of a given cell in a grid based on the moves array.
      * 
-     * @param row 2D coordinate of the current cell being analyzed in the grid.
+     * @param row 2D coordinate of the cell being analyzed for neighbors.
      * 
-     * @param column 2D coordinate of the grid cell being analyzed for neighbors.
+     * @param column 2D coordinate of the cell being counted for its neighbors, along
+     * with the row parameter representing the 2D coordinate of the cell itself.
      * 
      * @returns the number of neighbors of a given cell in the grid.
      */
@@ -175,20 +179,19 @@ public int size() {
 
 
     /**
-     * Checks if a given cell is an orphan (i.e., it has no horizontally or vertically
-     * adjacent cells with a count of 1). It does so by iterating over the neighboring
-     * cells and checking if any have a count of 0.
+     * Checks if a cell is an orphan by checking its neighbors and verifying that no other
+     * cell in those neighbors has zero count. If so, it returns `true`.
      * 
-     * @param count number of orphan nodes in the graph being analyzed.
+     * @param count 2D cell's count of occupied cells adjacent to it, which is used to
+     * determine whether an orphan cell exists.
      * 
-     * @param row 2D coordinate of the cell being analyzed in the grid.
+     * @param row 1D coordinate of the current cell being evaluated for orphan status.
      * 
-     * @param column 2D coordinate of the cell being checked for orphans, and is used to
-     * determine the set of neighboring cells to check for orphan status in the `neighbors()`
-     * method call.
+     * @param column 2nd dimension of the grid, which is used to determine the neighbors
+     * of the given cell.
      * 
-     * @returns a boolean value indicating whether an orphan cell has been detected in
-     * the grid.
+     * @returns a boolean value indicating whether an orphan node has been detected in
+     * the graph.
      */
     private static boolean orphanDetected(int count, int row, int column) {
         if (count < total - 1) {
@@ -203,8 +206,8 @@ public int size() {
     }
 
     /**
-     * Iterates over a 2D grid, printing each element on a new line. If an element is -1,
-     * it is skipped.
+     * Iterates over a 2D grid and prints each element in a column, skipping any elements
+     * marked as -1.
      */
     private static void printResult() {
         for (int[] row : grid) {
