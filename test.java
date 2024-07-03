@@ -1,21 +1,8 @@
 package com.thealgorithms.backtracking;
 import java.util.*;
-/**
- * Is a solver for the classic problem of finding a path that visits every square on
- * a board once and returns to the starting position without stepping on any mines.
- * The class takes in the dimensions of the grid and initial row and column as inputs,
- * and then uses a recursive or iterative approach to find the solution. The class
- * also includes methods for neighbors and countNeighbors, which are used to determine
- * the number of neighbors for each position reached by moving from the current
- * position to the target position.
- */
+
 public class KnightsTour {
-/**
- * Calculates the number of nodes in a linked list, iterating through the list from
- * the starting node until reaching the end.
- * 
- * @returns the number of nodes in the linked list.
- */
+
 public int size() {
     restartFromHead: for (;;) {
         int count = 0;
